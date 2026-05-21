@@ -209,15 +209,31 @@
     
     /* --- 미연시 화면 스타일 --- */
     .vn-container {
+     .vn-container {
         position: relative;
         width: 100%;
         max-width: 800px;
-        aspect-ratio: 16 / 9; /* 와이드 비율 유지 */
+        aspect-ratio: 4 / 3; /* 모바일에서도 덜 찌그러지도록 비율 수정 */
         border: 2px solid #fff;
         background: #111;
         box-shadow: 8px 8px 0px rgba(255, 255, 255, 0.2);
         cursor: pointer;
         overflow: hidden;
+    }
+
+    .dialogue-box {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        height: auto; /* 찌그러짐 방지: 텍스트에 맞춰 높이가 알아서 늘어남 */
+        min-height: 35%; /* 최소 높이 보장 */
+        background: rgba(0, 0, 0, 0.85);
+        border: 2px solid #fff;
+        padding: 15px;
+        box-sizing: border-box;
+        text-align: left;
     }
 
     .vn-image {
@@ -226,21 +242,7 @@
         object-fit: cover; /* 이미지가 꽉 차게 */
         display: block;
         opacity: 0.8;
-    }
-
-    .dialogue-box {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        height: 35%;
-        background: rgba(0, 0, 0, 0.85);
-        border: 2px solid #fff;
-        padding: 20px;
-        box-sizing: border-box;
-        text-align: left;
-    }
+    }
 
     .speaker-name {
         font-size: 22px;
