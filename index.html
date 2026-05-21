@@ -261,6 +261,21 @@
         animation: blink 1s infinite;
         display: none;
     }
+    /* --- 3페이지 명단 링크 스타일 --- */
+    .roster-list li a {
+        color: #ddd; /* 기본 텍스트 색상 */
+        text-decoration: none; /* 촌스러운 파란 밑줄 제거 */
+        display: inline-block;
+        width: 100%; /* 글자 옆 빈 공간을 눌러도 클릭되게 영역 확장 */
+        transition: 0.2s; /* 부드러운 색상 전환 */
+    }
+
+    /* 마우스를 올렸을 때 (호버 효과) */
+    .roster-list li a:hover {
+        color: #9B111E; /* 텍스트가 묵직한 버건디 톤으로 변경됨 */
+        text-shadow: 0 0 8px rgba(155, 17, 30, 0.8); /* 검붉은 글로우 효과 */
+        transform: translateX(5px); /* 마우스를 올리면 오른쪽으로 살짝 이동 */
+    }
 
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 </style>
@@ -270,7 +285,7 @@
 <div class="stars" id="star-container"></div>
 
 <div class="navbar">
-    <button class="nav-btn active-tab" onclick="goPage('page1', this)">[ VIDEO ]</button>
+    <button class="nav-btn active-tab" onclick="goPage('page1', this)">[ MAIN ]</button>
     <button class="nav-btn" onclick="goPage('page2', this)">[ JOIN ]</button>
     <button class="nav-btn" onclick="goPage('page3', this)">[ ROSTER ]</button>
 </div>
@@ -282,7 +297,7 @@
             
             <div class="dialogue-box">
                 <div class="speaker-name" id="speakerName">SYSTEM</div>
-                <div class="dialogue-text" id="dialogueText">......일어나...</div>
+                <div class="dialogue-text" id="dialogueText">... 기다렸어.</div>
                 <div class="click-indicator" id="clickIndicator">▼</div>
             </div>
         </div>
@@ -303,14 +318,14 @@
         </div>
     </div>
 
-    <div id="page3" class="page">
+<div id="page3" class="page">
         <div class="retro-box">
             <h2>USER.ROSTER</h2>
             <ul class="roster-list">
-                <li>PARTICIPANT_001</li>
-                <li>PARTICIPANT_002</li>
-                <li>PARTICIPANT_003</li>
-                <li>PARTICIPANT_004</li>
+                <li><a href="https://example.com/1" target="_blank">PARTICIPANT_001</a></li>
+                <li><a href="https://example.com/2" target="_blank">PARTICIPANT_002</a></li>
+                <li><a href="https://example.com/3" target="_blank">PARTICIPANT_003</a></li>
+                <li><a href="https://example.com/4" target="_blank">PARTICIPANT_004</a></li>
             </ul>
         </div>
     </div>
@@ -357,8 +372,8 @@
         { name: "???", text: "드디어 일어났구나? 기다리다 깜빡 잠들 뻔했어.", image: "티티스_미소.png" },
         { name: "???", text: "그렇게 경계할 거 없어. 여긴 내 집이니까. 안전해.", image: "티티스_미소.png" },
         { name: "???", text: "네가 죽기만을 기다렸어. 너를 꼭 데려오고 싶었거든. 너처럼 나쁜 아이를 무척 사랑해서.", image: "티티스_미소.png" },
-        { name: "???", text: "그래서 온 세상의 나쁜 아이들을 데려왔어. 궁금하지 않아? 나쁜 아이들 중에서 누가 제일 나쁠지. 그 중 누가 제일 강할지.", image: "티티스_미소.png" },
-        { name: "???", text: "제일 나쁜 아이에게는, 새 삶을 주려고 해. 죽기 전 모든 걸 되돌릴 수 있는 시간과, 새로운 삶을.", image: "티티스_미소.png" },
+        { name: "???", text: "그래서 온 세상의 나쁜 아이들을 데려왔어. 궁금하지 않아? 나쁜 아이들 중에서 누가 제일 나쁠지.", image: "티티스_미소.png" },
+        { name: "???", text: "제일 나쁜 아이에게는, 새 삶을 줄거야. 죽기 전 모든 걸 되돌릴 수 있는 시간과, 새로운 삶을.", image: "티티스_미소.png" },
         { name: "???", text: "강요하는 건 아니야. 하지만... 이대로 죽기엔 아깝지 않아?", image: "티티스_미소.png" },
         { name: "???", text: "잘 생각해 봐. 뭐, 선택지는 결국 하나밖에 없겠지만. 기다릴게.", image: "티티스_미소.png" },
         { name: "???", text: ". . . . . .", image: "티티스_무표정.png" },
@@ -366,9 +381,8 @@
         { name: "???", text: ". . . . . ?", image: "티티스_당황.png" },
         { name: "???", text: "저기, 그렇게 계속 쳐다보면 좀 무섭거든? 나 할 말 끝났는데.", image: "티티스_불안.png" },
         { name: "???", text: "아, 내 이름? 이 와중에 그게 궁금해?", image: "티티스_무표정.png" },
-        { name: "티티스", text: "티티스. 나는 전쟁과 평화, 파괴와 질서. 양쪽 다 사랑하는 존재.", image: "티티스_미소.png" },
-        { name: "티티스", text: "자세히는 몰라도 돼. 네가 정말 바라는 건 그게 아니잖아?", image: "티티스_미소.png" },
-        { name: "티티스", text: "모쪼록, 잘 생각해 봐...", image: "티티스_미소.png" },
+        { name: "???", text: "곧 알게될거야.", image: "티티스_미소.png" },
+        { name: "티티스", text: "아무튼. 모쪼록, 잘 생각해 봐...", image: "티티스_미소.png" },
         { name: "SYSTEM", text: "한 번 더 누르시면 처음으로 되돌아갑니다.", image: "흑백.png"}
     ];
 
