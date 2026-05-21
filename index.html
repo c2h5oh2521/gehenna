@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>GEHENNA - 프로젝트 참여 페이지</title>
 <style>
     /* 네오둥근모 폰트 불러오기 */
@@ -13,7 +13,12 @@
         font-style: normal;
     }
 
-    /* 기본 설정: 가로 스크롤 절대 방지 */
+    /* 💡 모든 요소의 테두리를 안쪽으로 계산하여 삐져나감 방지 */
+    * {
+        box-sizing: border-box;
+    }
+
+    /* 💡 화면 자체를 못 움직이게 압정으로 콱 박아버림 (모바일 튕김 완벽 차단) */
     body, html {
         margin: 0;
         padding: 0;
@@ -22,8 +27,8 @@
         background-color: #000;
         color: #fff;
         font-family: 'NeoDunggeunmo', sans-serif;
-        overflow-x: hidden; /* 가로 스크롤 완전 차단 */
-        overflow-y: hidden; /* 세로 스크롤 고정 */
+        overflow: hidden; 
+        position: fixed; 
     }
 
     /* 상단 고정 내비게이션 바 */
@@ -34,26 +39,27 @@
         width: 100%;
         border-bottom: 2px solid #fff;
         background-color: rgba(0, 0, 0, 0.8);
-        display: flex; /* 요소들을 가로로 배치 */
+        display: flex;
         z-index: 50;
         backdrop-filter: blur(2px);
     }
 
     /* 버튼 크기를 모바일에 맞게 압축 */
     .nav-btn {
-        flex: 1; /* 세 버튼이 1:1:1 비율로 화면 폭에 딱 맞게 분배됨 */
+        flex: 1; 
         background: #000;
         color: #fff;
         border: none;
         border-right: 1px solid #fff;
-        border-left: 1px solid #fff;
-        padding: 12px 0; /* 좌우 여백을 없애서 밀림 방지 */
+        padding: 12px 0; 
         font-family: 'NeoDunggeunmo', sans-serif;
         font-size: 16px; 
         cursor: pointer;
         transition: 0.2s;
-        margin: 0 -1px;
         text-align: center;
+    }
+    .nav-btn:first-child {
+        border-left: 1px solid #fff;
     }
     .nav-btn:hover, .nav-btn.active-tab {
         background: #fff;
@@ -89,7 +95,7 @@
         position: relative;
         width: 100%;
         height: 100vh;
-        padding-top: 60px; /* 네비게이션 바 높이만큼 띄움 */
+        padding-top: 60px;
         box-sizing: border-box;
     }
 
@@ -100,7 +106,7 @@
         left: 0;
         width: 100%;
         height: calc(100% - 60px);
-        display: none; /* 기본적으로 숨김 */
+        display: none; 
         flex-direction: column;
         justify-content: center;
         align-items: center;
@@ -109,7 +115,6 @@
         box-sizing: border-box;
     }
 
-    /* 💡 빠졌던 핵심 부품: 활성화된 페이지만 보이게 하는 스위치 */
     .page.active {
         display: flex;
         animation: glitchAppear 0.3s steps(3);
@@ -199,7 +204,7 @@
         position: relative;
         width: 100%;
         max-width: 800px;
-        height: 70vh; /* 화면 높이의 70% 고정 (모바일 튕김 방지) */
+        height: 70vh; 
         max-height: 500px;
         border: 2px solid #fff;
         background: #111;
@@ -215,14 +220,14 @@
         display: block;
         opacity: 0.8;
     }
-    
-.dialogue-box {
+
+    /* 💡 대화창 높이 180px로 완전 고정 (덜렁거림 방지) */
+    .dialogue-box {
         position: absolute;
         bottom: 10px;
         left: 50%;
         transform: translateX(-50%);
         width: 90%;
-        /* 💡 핵심 수정: auto와 min-height를 지우고 180px로 완전히 고정! */
         height: 180px; 
         padding: 20px 20px 40px 20px; 
         background: rgba(0, 0, 0, 0.85);
@@ -273,7 +278,7 @@
 <div class="page-container">
     <div id="page1" class="page active">
         <div class="vn-container" onclick="nextDialogue()">
-            <img src="your_image.png" alt="캐릭터 일러스트" class="vn-image" id="bgImage">
+            <img src="scene1.png" alt="캐릭터 일러스트" class="vn-image" id="bgImage">
             
             <div class="dialogue-box">
                 <div class="speaker-name" id="speakerName">SYSTEM</div>
@@ -345,12 +350,13 @@
     window.onload = createDust;
     
     // --- 대화창 제어 시스템 ---
+    // 💡 대본에 image 속성을 추가하여 대사마다 배경을 바꿉니다.
     const scriptLines = [
-        { name: "???", text: "안녕, 안타까운 영혼들." },
-        { name: "???", text: "그렇게 겁먹을 필요 없어. 내가 널 부른 거니까." },
-        { name: "???", text: "뭐, 이러나 저러나. 본론을 말하자면." },
-        { name: "SYSTEM", text: "[경고] 미확인 접근이 감지되었습니다." },
-        { name: "SYSTEM", text: "대화가 종료되었습니다. 상단의 [ JOIN ]을 눌러 참여하십시오." }
+        { name: "NPC", text: "안녕, 안타까운 영혼들.", image: "scene1.png" },
+        { name: "NPC", text: "그렇게 겁먹을 필요 없어. 내가 널 부른 거니까.", image: "scene2.png" },
+        { name: "NPC", text: "뭐, 이러나 저러나. 본론을 말하자면.", image: "scene3.png" },
+        { name: "SYSTEM", text: "[경고] 미확인 접근이 감지되었습니다.", image: "warning.png" },
+        { name: "SYSTEM", text: "대화가 종료되었습니다. 상단의 [ JOIN ]을 눌러 참여하십시오.", image: "end.png" }
     ];
 
     let currentLine = -1;
@@ -360,7 +366,7 @@
     const typeSound = new Audio('your_sound.wav');
     typeSound.volume = 0.5; 
 
-    // 💡 빠졌던 핵심 부품: 모바일 오디오 권한 잠금 해제 스위치
+    // 모바일 오디오 권한 잠금 해제 스위치
     let isAudioUnlocked = false; 
 
     function nextDialogue() {
@@ -389,6 +395,11 @@
             currentLine++;
             const lineData = scriptLines[currentLine];
             
+            // 💡 여기서 이미지가 갈아끼워집니다.
+            if (lineData.image) {
+                document.getElementById('bgImage').src = lineData.image;
+            }
+
             document.getElementById('speakerName').textContent = lineData.name;
             document.getElementById('dialogueText').textContent = "";
             document.getElementById('clickIndicator').style.display = 'none';
