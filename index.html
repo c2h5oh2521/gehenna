@@ -215,21 +215,21 @@
         display: block;
         opacity: 0.8;
     }
-
-    .dialogue-box {
+    
+.dialogue-box {
         position: absolute;
         bottom: 10px;
         left: 50%;
         transform: translateX(-50%);
         width: 90%;
-        height: auto; 
-        min-height: 100px; /* 텍스트 넘침 방지 */
-        padding: 20px 20px 40px 20px; /* 하단 여백 확보 */
+        /* 💡 핵심 수정: auto와 min-height를 지우고 180px로 완전히 고정! */
+        height: 180px; 
+        padding: 20px 20px 40px 20px; 
         background: rgba(0, 0, 0, 0.85);
         border: 2px solid #fff;
         box-sizing: border-box;
         text-align: left;
-        word-break: keep-all; /* 한글 줄바꿈 예쁘게 */
+        word-break: keep-all; 
     }
 
     .speaker-name {
