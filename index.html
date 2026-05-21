@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>프로젝트 참여 페이지</title>
+<title>GEHENNA - 프로젝트 참여 페이지</title>
 <style>
     /* 네오둥근모 폰트 불러오기 */
     @font-face {
@@ -13,8 +13,7 @@
         font-style: normal;
     }
 
-    /* 기본 설정: 완전한 블랙 & 화이트 터미널 감성 */
-/* 기본 설정: 가로 스크롤 절대 방지 */
+    /* 기본 설정: 가로 스크롤 절대 방지 */
     body, html {
         margin: 0;
         padding: 0;
@@ -24,7 +23,7 @@
         color: #fff;
         font-family: 'NeoDunggeunmo', sans-serif;
         overflow-x: hidden; /* 가로 스크롤 완전 차단 */
-        overflow-y: hidden; /* 1페이지에서는 세로 스크롤도 차단 (고정) */
+        overflow-y: hidden; /* 세로 스크롤 고정 */
     }
 
     /* 상단 고정 내비게이션 바 */
@@ -48,15 +47,15 @@
         border: none;
         border-right: 1px solid #fff;
         border-left: 1px solid #fff;
-        padding: 12px 0; /* 모바일에서 좌우 여백을 없애서 밀림 방지 */
+        padding: 12px 0; /* 좌우 여백을 없애서 밀림 방지 */
         font-family: 'NeoDunggeunmo', sans-serif;
-        font-size: 16px; /* 모바일 폰트 사이즈 살짝 축소 */
+        font-size: 16px; 
         cursor: pointer;
         transition: 0.2s;
         margin: 0 -1px;
         text-align: center;
     }
-        .nav-btn:hover, .nav-btn.active-tab {
+    .nav-btn:hover, .nav-btn.active-tab {
         background: #fff;
         color: #000;
     }
@@ -94,20 +93,26 @@
         box-sizing: border-box;
     }
 
-   /* 페이지 컨테이너 */
+    /* 개별 페이지 공통 스타일 */
     .page {
         position: absolute;
-        top: 60px; /* 네비게이션 높이 */
+        top: 60px;
         left: 0;
         width: 100%;
-        height: calc(100% - 60px); /* 화면 전체에서 네비게이션 높이만 딱 뺌 */
-        display: none;
+        height: calc(100% - 60px);
+        display: none; /* 기본적으로 숨김 */
         flex-direction: column;
         justify-content: center;
         align-items: center;
         z-index: 10;
-        padding: 10px; /* 좁은 폰 화면을 위해 여백 축소 */
+        padding: 10px;
         box-sizing: border-box;
+    }
+
+    /* 💡 빠졌던 핵심 부품: 활성화된 페이지만 보이게 하는 스위치 */
+    .page.active {
+        display: flex;
+        animation: glitchAppear 0.3s steps(3);
     }
 
     /* 레트로한 화면 전환 효과 */
@@ -115,22 +120,6 @@
         0% { opacity: 0; transform: scale(1.02); filter: invert(1); }
         50% { opacity: 0.5; transform: scale(0.98); filter: invert(0); }
         100% { opacity: 1; transform: scale(1); }
-    }
-
-    /* 1페이지: 영상 박스 */
-    .video-wrapper {
-        border: 2px solid #fff;
-        padding: 4px;
-        background: #000;
-        box-shadow: 8px 8px 0px rgba(255, 255, 255, 0.2);
-        max-width: 800px;
-        width: 100%;
-    }
-    
-    video {
-        width: 100%;
-        display: block;
-        border: 1px solid #333;
     }
 
     /* 2, 3페이지: UI 박스 */
@@ -205,19 +194,26 @@
     ::-webkit-scrollbar-track { background: #000; border-left: 1px solid #333; }
     ::-webkit-scrollbar-thumb { background: #fff; }
     
-    /* --- 미연시 화면 스타일 --- */
-    /* 대화창 전체 틀 */
+    /* --- 1페이지: 미연시 화면 스타일 --- */
     .vn-container {
         position: relative;
         width: 100%;
         max-width: 800px;
-        height: 70vh; /* 비율 대신 높이를 모바일 화면의 70%로 고정 (찌그러짐/탈출 완벽 방지) */
-        max-height: 500px; /* PC에서 너무 커지는 것 방지 */
+        height: 70vh; /* 화면 높이의 70% 고정 (모바일 튕김 방지) */
+        max-height: 500px;
         border: 2px solid #fff;
         background: #111;
         box-shadow: 8px 8px 0px rgba(255, 255, 255, 0.2);
         cursor: pointer;
         overflow: hidden;
+    }
+
+    .vn-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; 
+        display: block;
+        opacity: 0.8;
     }
 
     .dialogue-box {
@@ -226,23 +222,15 @@
         left: 50%;
         transform: translateX(-50%);
         width: 90%;
-        height: auto; /* 찌그러짐 방지: 텍스트에 맞춰 높이가 알아서 늘어남 */
-        min-height: 35%; /* 최소 높이 보장 */
+        height: auto; 
+        min-height: 100px; /* 텍스트 넘침 방지 */
+        padding: 20px 20px 40px 20px; /* 하단 여백 확보 */
         background: rgba(0, 0, 0, 0.85);
         border: 2px solid #fff;
-        padding: 15px;
         box-sizing: border-box;
         text-align: left;
+        word-break: keep-all; /* 한글 줄바꿈 예쁘게 */
     }
-
-    .vn-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* 이미지가 꽉 차게 */
-        display: block;
-        opacity: 0.8;
-    }
-
 
     .speaker-name {
         font-size: 22px;
@@ -260,26 +248,22 @@
         color: #ddd;
     }
 
-    /* 다음 대사 대기 깜빡임 효과 */
     .click-indicator {
         position: absolute;
-        right: 20px;
-        bottom: 20px;
-        font-size: 20px;
+        right: 15px;
+        bottom: 10px;
+        font-size: 18px;
         animation: blink 1s infinite;
-        display: none; /* 타이핑 중에는 숨김 */
+        display: none;
     }
 
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
 </style>
 </head>
 <body>
 
-<!-- 우주 먼지 -->
 <div class="stars" id="star-container"></div>
 
-<!-- 상단 네비게이션 바 -->
 <div class="navbar">
     <button class="nav-btn active-tab" onclick="goPage('page1', this)">[ VIDEO ]</button>
     <button class="nav-btn" onclick="goPage('page2', this)">[ JOIN ]</button>
@@ -287,23 +271,18 @@
 </div>
 
 <div class="page-container">
-<!-- ================= 1페이지 (미연시 스타일 대화창) ================= -->
-<div id="page1" class="page active">
-    <!-- 화면을 클릭하면 다음 대사로 넘어가는 함수 실행 -->
-    <div class="vn-container" onclick="nextDialogue()">
-        <!-- 배경/캐릭터 이미지 (준비하신 사진 파일명으로 변경) -->
-        <img src="your_image.png" alt="캐릭터 일러스트" class="vn-image" id="bgImage">
-        
-        <!-- 하단 대화창 UI -->
-        <div class="dialogue-box">
-            <div class="speaker-name" id="speakerName">SYSTEM</div>
-            <div class="dialogue-text" id="dialogueText">클릭하여 통신을 연결하십시오...</div>
-            <div class="click-indicator" id="clickIndicator">▼</div>
+    <div id="page1" class="page active">
+        <div class="vn-container" onclick="nextDialogue()">
+            <img src="your_image.png" alt="캐릭터 일러스트" class="vn-image" id="bgImage">
+            
+            <div class="dialogue-box">
+                <div class="speaker-name" id="speakerName">SYSTEM</div>
+                <div class="dialogue-text" id="dialogueText">클릭하여 통신을 연결하십시오...</div>
+                <div class="click-indicator" id="clickIndicator">▼</div>
+            </div>
         </div>
     </div>
-</div>
 
-    <!-- 2페이지 (참여 링크) -->
     <div id="page2" class="page">
         <div class="retro-box">
             <h2>SYSTEM.JOIN</h2>
@@ -319,7 +298,6 @@
         </div>
     </div>
 
-    <!-- 3페이지 (참여자 명단) -->
     <div id="page3" class="page">
         <div class="retro-box">
             <h2>USER.ROSTER</h2>
@@ -336,16 +314,13 @@
 <script>
     // 페이지 전환 함수
     function goPage(pageId, btnElement) {
-        // 모든 페이지 숨기기
         document.querySelectorAll('.page').forEach(page => {
             page.classList.remove('active');
         });
-        // 모든 버튼에서 강조(active-tab) 효과 제거
         document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.classList.remove('active-tab');
         });
 
-        // 선택한 페이지와 버튼만 활성화
         document.getElementById(pageId).classList.add('active');
         btnElement.classList.add('active-tab');
     }
@@ -353,31 +328,23 @@
     // 우주 먼지 흩뿌리기
     function createDust() {
         const container = document.getElementById('star-container');
-        const dustCount = 60; // 픽셀 느낌에 맞춰 개수 살짝 조정
+        const dustCount = 60; 
 
         for (let i = 0; i < dustCount; i++) {
             let star = document.createElement('div');
             star.className = 'star';
-            
-            // 위치
             star.style.left = Math.random() * 100 + 'vw';
-            
-            // 속도 및 딜레이
             let duration = Math.random() * 15 + 10; 
             star.style.animationDuration = duration + 's';
             star.style.animationDelay = Math.random() * -25 + 's';
-            
-            // 투명도 랜덤
             star.style.opacity = Math.random();
-
             container.appendChild(star);
         }
     }
 
     window.onload = createDust;
     
-// --- 대화창 제어 시스템 ---
-    // 1. 여기에 대본을 작성하세요!
+    // --- 대화창 제어 시스템 ---
     const scriptLines = [
         { name: "???", text: "안녕, 안타까운 영혼들." },
         { name: "???", text: "그렇게 겁먹을 필요 없어. 내가 널 부른 거니까." },
@@ -386,22 +353,33 @@
         { name: "SYSTEM", text: "대화가 종료되었습니다. 상단의 [ JOIN ]을 눌러 참여하십시오." }
     ];
 
-    let currentLine = -1; // 현재 대사 순서
+    let currentLine = -1;
     let isTyping = false;
     let typingTimer;
 
-    // 2. 효과음 파일 불러오기 (저장해둔 wav 파일명 입력)
     const typeSound = new Audio('your_sound.wav');
-    typeSound.volume = 0.5; // 소리 크기 조절 (0.0 ~ 1.0)
+    typeSound.volume = 0.5; 
 
-function nextDialogue() {
+    // 💡 빠졌던 핵심 부품: 모바일 오디오 권한 잠금 해제 스위치
+    let isAudioUnlocked = false; 
+
+    function nextDialogue() {
+        // 첫 터치 시 강제로 오디오 권한 해제
+        if (!isAudioUnlocked) {
+            typeSound.play().then(() => {
+                typeSound.pause();
+                typeSound.currentTime = 0;
+            }).catch(e => {});
+            isAudioUnlocked = true;
+        }
+
         // 대사가 끝난 상태에서 클릭하면 처음으로 되돌아감
         if (currentLine >= scriptLines.length - 1 && !isTyping) {
             currentLine = -1; 
         }
 
         if (isTyping) {
-            // 클릭 시: 타이핑 중이라면 스킵하고 전체 텍스트 즉시 출력
+            // 클릭 시 텍스트 즉시 출력
             clearInterval(typingTimer);
             isTyping = false;
             document.getElementById('dialogueText').textContent = scriptLines[currentLine].text;
@@ -417,12 +395,11 @@ function nextDialogue() {
             
             isTyping = true;
             let charIndex = 0;
-            let currentText = ""; // 💡 해결 코드: 글자를 차곡차곡 모아둘 임시 바구니 생성
+            let currentText = ""; 
             
-            // 타이핑 시작
             typingTimer = setInterval(() => {
-                currentText += lineData.text.charAt(charIndex); // 바구니에 한 글자(공백 포함)씩 추가
-                document.getElementById('dialogueText').textContent = currentText; // 화면에 바구니 내용 출력
+                currentText += lineData.text.charAt(charIndex); 
+                document.getElementById('dialogueText').textContent = currentText; 
                 
                 // 공백이 아닐 때만 타격음 재생
                 if (lineData.text.charAt(charIndex) !== " ") {
@@ -432,7 +409,6 @@ function nextDialogue() {
                 
                 charIndex++;
                 
-                // 대사가 다 끝나면 타이머 종료
                 if (charIndex >= lineData.text.length) {
                     clearInterval(typingTimer);
                     isTyping = false;
