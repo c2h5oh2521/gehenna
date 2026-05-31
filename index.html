@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>GEHENNA - 프로젝트 참여 페이지</title>
+<title>GEHENNA - 프로젝트 아카이브</title>
 <style>
     /* 네오둥근모 폰트 불러오기 */
     @font-face {
@@ -13,12 +13,11 @@
         font-style: normal;
     }
 
-    /* 💡 모든 요소의 테두리를 안쪽으로 계산하여 삐져나감 방지 */
     * {
         box-sizing: border-box;
     }
 
-    /* 💡 화면 자체를 못 움직이게 압정으로 콱 박아버림 (모바일 튕김 완벽 차단) */
+    /* 화면 고정 (모바일 튕김 방지) */
     body, html {
         margin: 0;
         padding: 0;
@@ -42,9 +41,9 @@
         display: flex;
         z-index: 50;
         backdrop-filter: blur(2px);
+        padding-right: 90px; /* BGM 버튼이 들어갈 자리 확보 */
     }
 
-    /* 버튼 크기를 모바일에 맞게 압축 */
     .nav-btn {
         flex: 1; 
         background: #000;
@@ -62,6 +61,26 @@
         border-left: 1px solid #fff;
     }
     .nav-btn:hover, .nav-btn.active-tab {
+        background: #fff;
+        color: #000;
+    }
+
+    /* 🎵 우측 상단 BGM 버튼 */
+    .bgm-btn {
+        position: fixed;
+        top: 8px;
+        right: 10px;
+        z-index: 100;
+        background: #000;
+        color: #fff;
+        border: 2px solid #fff;
+        font-family: 'NeoDunggeunmo', sans-serif;
+        font-size: 12px;
+        padding: 6px 8px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+    .bgm-btn:hover {
         background: #fff;
         color: #000;
     }
@@ -108,11 +127,12 @@
         height: calc(100% - 60px);
         display: none; 
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         z-index: 10;
-        padding: 10px;
+        padding: 20px;
         box-sizing: border-box;
+        overflow-y: auto; /* 내용이 길어지면 스크롤 가능하게 */
     }
 
     .page.active {
@@ -120,22 +140,21 @@
         animation: glitchAppear 0.3s steps(3);
     }
 
-    /* 레트로한 화면 전환 효과 */
     @keyframes glitchAppear {
         0% { opacity: 0; transform: scale(1.02); filter: invert(1); }
         50% { opacity: 0.5; transform: scale(0.98); filter: invert(0); }
         100% { opacity: 1; transform: scale(1); }
     }
 
-    /* 2, 3페이지: UI 박스 */
+    /* UI 박스 (기존 감성 유지) */
     .retro-box {
         border: 2px solid #fff;
-        background: #000;
+        background: rgba(0, 0, 0, 0.85);
         padding: 30px;
         width: 100%;
-        max-width: 500px;
+        max-width: 600px;
         box-shadow: 8px 8px 0px rgba(255, 255, 255, 0.2);
-        text-align: center;
+        margin-bottom: 30px;
     }
 
     .retro-box h2 {
@@ -143,9 +162,26 @@
         border-bottom: 2px dashed #555;
         padding-bottom: 15px;
         letter-spacing: 2px;
+        text-align: center;
     }
 
-    /* 2페이지: 링크 버튼 (픽셀 스타일) */
+    .retro-box p {
+        color: #ddd;
+        font-size: 15px;
+        line-height: 1.8;
+        word-break: keep-all;
+    }
+
+    .retro-box blockquote {
+        margin: 15px 0;
+        padding: 10px 15px;
+        border-left: 4px solid #fff;
+        background: #111;
+        color: #aaa;
+        font-size: 14px;
+    }
+
+    /* 3페이지: 링크 버튼 (픽셀 스타일) */
     .link-group {
         display: flex;
         flex-direction: column;
@@ -163,6 +199,7 @@
         font-size: 16px;
         transition: 0.1s;
         text-transform: uppercase;
+        text-align: center;
     }
 
     .link-btn:hover {
@@ -172,161 +209,73 @@
         box-shadow: 4px 4px 0px #555;
     }
 
-    /* 3페이지: 명단 리스트 */
-    .roster-list {
-        list-style: none;
-        padding: 0;
-        margin: 20px 0 0 0;
-        max-height: 40vh;
-        overflow-y: auto;
-        text-align: left;
-        border: 1px solid #333;
-        background: #0a0a0a;
-    }
-
-    .roster-list li {
-        padding: 12px 15px;
-        border-bottom: 1px dashed #333;
-    }
-    
-    .roster-list li::before {
-        content: "> ";
-        color: #888;
-    }
-
     /* 각진 레트로 스크롤바 */
     ::-webkit-scrollbar { width: 12px; }
     ::-webkit-scrollbar-track { background: #000; border-left: 1px solid #333; }
     ::-webkit-scrollbar-thumb { background: #fff; }
-    
-    /* --- 1페이지: 미연시 화면 스타일 --- */
-    .vn-container {
-        position: relative;
-        width: 100%;
-        max-width: 800px;
-        height: 70vh; 
-        max-height: 500px;
-        border: 2px solid #fff;
-        background: #111;
-        box-shadow: 8px 8px 0px rgba(255, 255, 255, 0.2);
-        cursor: pointer;
-        overflow: hidden;
-    }
-
-    .vn-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; 
-        display: block;
-        opacity: 0.8;
-    }
-
-    /* 💡 대화창 높이 180px로 완전 고정 (덜렁거림 방지) */
-    .dialogue-box {
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        height: 180px; 
-        padding: 20px 20px 40px 20px; 
-        background: rgba(0, 0, 0, 0.85);
-        border: 2px solid #fff;
-        box-sizing: border-box;
-        text-align: left;
-        word-break: keep-all; 
-    }
-
-    .speaker-name {
-        font-size: 22px;
-        color: #fff;
-        border-bottom: 2px dashed #555;
-        padding-bottom: 5px;
-        margin-bottom: 12px;
-        display: inline-block;
-        font-weight: bold;
-    }
-
-    .dialogue-text {
-        font-size: 18px;
-        line-height: 1.6;
-        color: #ddd;
-    }
-
-    .click-indicator {
-        position: absolute;
-        right: 15px;
-        bottom: 10px;
-        font-size: 18px;
-        animation: blink 1s infinite;
-        display: none;
-    }
-    /* --- 3페이지 명단 링크 스타일 --- */
-    .roster-list li a {
-        color: #ddd; /* 기본 텍스트 색상 */
-        text-decoration: none; /* 촌스러운 파란 밑줄 제거 */
-        display: inline-block;
-        width: 100%; /* 글자 옆 빈 공간을 눌러도 클릭되게 영역 확장 */
-        transition: 0.2s; /* 부드러운 색상 전환 */
-    }
-
-    /* 마우스를 올렸을 때 (호버 효과) */
-    .roster-list li a:hover {
-        color: #9B111E; /* 텍스트가 묵직한 버건디 톤으로 변경됨 */
-        text-shadow: 0 0 8px rgba(155, 17, 30, 0.8); /* 검붉은 글로우 효과 */
-        transform: translateX(5px); /* 마우스를 올리면 오른쪽으로 살짝 이동 */
-    }
-
-    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 </style>
 </head>
 <body>
 
 <div class="stars" id="star-container"></div>
 
+<!-- 🔊 오디오 요소 (src 에 원하는 음원 파일 경로를 넣으세요) -->
+<audio id="bgmAudio" loop>
+    <source src="Enfant-au-Ciel.mp3" type="audio/mpeg">
+</audio>
+
 <div class="navbar">
-    <button class="nav-btn active-tab" onclick="goPage('page1', this)">[ MAIN ]</button>
-    <button class="nav-btn" onclick="goPage('page2', this)">[ JOIN ]</button>
-    <button class="nav-btn" onclick="goPage('page3', this)">[ ROSTER ]</button>
+    <button class="nav-btn active-tab" onclick="goPage('page1', this)">[ INFO ]</button>
+    <button class="nav-btn" onclick="goPage('page2', this)">[ LORE ]</button>
+    <button class="nav-btn" onclick="goPage('page3', this)">[ LINK ]</button>
 </div>
 
+<!-- 우측 상단 BGM 버튼 -->
+<button class="bgm-btn" id="bgmBtn" onclick="toggleBGM()">[ 🔇 BGM ]</button>
+
 <div class="page-container">
+    <!-- 1페이지: 안내문 / 모집 공고 -->
     <div id="page1" class="page active">
-        <div class="vn-container" onclick="nextDialogue()">
-            <img src="흑백.png" alt="캐릭터 일러스트" class="vn-image" id="bgImage">
-            
-            <div class="dialogue-box">
-                <div class="speaker-name" id="speakerName">SYSTEM</div>
-                <div class="dialogue-text" id="dialogueText">... 기다렸어.</div>
-                <div class="click-indicator" id="clickIndicator">▼</div>
-            </div>
+        <div class="retro-box">
+            <h2>SYSTEM.INFO</h2>
+            <p>
+                > ACCESS GRANTED.<br>
+                > 본 프로젝트는 텍스트 기반 스토리텔링 및 캐릭터 롤플레잉 공간입니다. 아래 모집 요강을 확인해 주십시오.
+            </p>
+            <blockquote>
+                - 모집 기간: 상시 모집<br>
+                - 모집 대상: 성인 창작자 (0X년생 이상)<br>
+                - 활동 내용: 시나리오 롤플레잉 및 로그 투고
+            </blockquote>
         </div>
     </div>
 
+    <!-- 2페이지: 세계관 설정 -->
     <div id="page2" class="page">
         <div class="retro-box">
-            <h2>SYSTEM.JOIN</h2>
-            <p style="color: #ccc; font-size: 14px; line-height: 1.6; text-align: left;">
-                > ACCESS GRANTED.<br>
-                > 아래 링크를 통해 양식을 제출하십시오.
+            <h2>SYSTEM.LORE</h2>
+            <p>
+                [ 기록 열람 중... ]<br><br>
+                이곳에 세계관 스토리를 채워 넣으시면 됩니다. 기존 폰트의 가독성과 레트로한 분위기가 텍스트를 더욱 몰입감 있게 만들어 줍니다.
             </p>
-            <div class="link-group">
-                <a href="#" target="_blank" class="link-btn">구글 폼 제출</a>
-                <a href="#" target="_blank" class="link-btn">문의하기 (Q&A)</a>
-                <a href="#" target="_blank" class="link-btn">공식 계정 연결</a>
-            </div>
+            <p>
+                단락을 나눌 때는 이렇게 p 태그를 분리해서 작성하시면 깔끔하게 떨어집니다.
+            </p>
         </div>
     </div>
 
-<div id="page3" class="page">
+    <!-- 3페이지: 링크 버튼들 -->
+    <div id="page3" class="page">
         <div class="retro-box">
-            <h2>USER.ROSTER</h2>
-            <ul class="roster-list">
-                <li><a href="https://example.com/1" target="_blank">PARTICIPANT_001</a></li>
-                <li><a href="https://example.com/2" target="_blank">PARTICIPANT_002</a></li>
-                <li><a href="https://example.com/3" target="_blank">PARTICIPANT_003</a></li>
-                <li><a href="https://example.com/4" target="_blank">PARTICIPANT_004</a></li>
-            </ul>
+            <h2>SYSTEM.LINK</h2>
+            <p style="text-align: center; color: #ccc;">
+                > 원하는 목적지를 선택하십시오.
+            </p>
+            <div class="link-group">
+                <a href="#" target="_blank" class="link-btn">신청서 접수 (Google Form)</a>
+                <a href="#" target="_blank" class="link-btn">1:1 문의 (Q&A)</a>
+                <a href="#" target="_blank" class="link-btn">공식 트위터 계정</a>
+            </div>
         </div>
     </div>
 </div>
@@ -363,97 +312,26 @@
     }
 
     window.onload = createDust;
-    
-    // --- 대화창 제어 시스템 ---
-    // 💡 대본에 image 속성을 추가하여 대사마다 배경을 바꿉니다.
-    const scriptLines = [
-        { name: "???", text: ". . . . . .", image: "흑백.png"},
-        { name: "???", text: ". . . . . .", image: "티티스_무표정.png" },
-        { name: "???", text: "드디어 일어났구나? 기다리다 깜빡 잠들 뻔했어.", image: "티티스_미소.png" },
-        { name: "???", text: "그렇게 경계할 거 없어. 여긴 내 집이니까. 안전해.", image: "티티스_미소.png" },
-        { name: "???", text: "네가 죽기만을 기다렸어. 너를 꼭 데려오고 싶었거든. 너처럼 나쁜 아이를 무척 사랑해서.", image: "티티스_미소.png" },
-        { name: "???", text: "그래서 온 세상의 나쁜 아이들을 데려왔어. 궁금하지 않아? 나쁜 아이들 중에서 누가 제일 나쁠지.", image: "티티스_미소.png" },
-        { name: "???", text: "제일 나쁜 아이에게는, 새 삶을 줄거야. 죽기 전 모든 걸 되돌릴 수 있는 시간과, 새로운 삶을.", image: "티티스_미소.png" },
-        { name: "???", text: "강요하는 건 아니야. 하지만... 이대로 죽기엔 아깝지 않아?", image: "티티스_미소.png" },
-        { name: "???", text: "잘 생각해 봐. 뭐, 선택지는 결국 하나밖에 없겠지만. 기다릴게.", image: "티티스_미소.png" },
-        { name: "???", text: ". . . . . .", image: "티티스_무표정.png" },
-        { name: "???", text: ". . . . . .", image: "티티스_무표정.png" },
-        { name: "???", text: ". . . . . ?", image: "티티스_당황.png" },
-        { name: "???", text: "저기, 그렇게 계속 쳐다보면 좀 무섭거든? 나 할 말 끝났는데.", image: "티티스_불안.png" },
-        { name: "???", text: "아, 내 이름? 이 와중에 그게 궁금해?", image: "티티스_무표정.png" },
-        { name: "???", text: "곧 알게될거야.", image: "티티스_미소.png" },
-        { name: "티티스", text: "아무튼. 모쪼록, 잘 생각해 봐...", image: "티티스_미소.png" },
-        { name: "SYSTEM", text: "한 번 더 누르시면 처음으로 되돌아갑니다.", image: "흑백.png"}
-    ];
 
-    let currentLine = -1;
-    let isTyping = false;
-    let typingTimer;
+    // 🎵 BGM 토글 스크립트
+    let isPlaying = false;
+    const bgm = document.getElementById('bgmAudio');
+    const bgmBtn = document.getElementById('bgmBtn');
 
-    const typeSound = new Audio('titis_voice.wav');
-    typeSound.volume = 0.5; 
-
-    // 모바일 오디오 권한 잠금 해제 스위치
-    let isAudioUnlocked = false; 
-
-    function nextDialogue() {
-        // 첫 터치 시 강제로 오디오 권한 해제
-        if (!isAudioUnlocked) {
-            typeSound.play().then(() => {
-                typeSound.pause();
-                typeSound.currentTime = 0;
-            }).catch(e => {});
-            isAudioUnlocked = true;
-        }
-
-        // 대사가 끝난 상태에서 클릭하면 처음으로 되돌아감
-        if (currentLine >= scriptLines.length - 1 && !isTyping) {
-            currentLine = -1; 
-        }
-
-        if (isTyping) {
-            // 클릭 시 텍스트 즉시 출력
-            clearInterval(typingTimer);
-            isTyping = false;
-            document.getElementById('dialogueText').textContent = scriptLines[currentLine].text;
-            document.getElementById('clickIndicator').style.display = 'block';
+    function toggleBGM() {
+        if (isPlaying) {
+            bgm.pause();
+            bgmBtn.innerText = "[ 🔇 BGM ]";
+            bgmBtn.style.background = "#000";
+            bgmBtn.style.color = "#fff";
         } else {
-            // 다음 대사 시작
-            currentLine++;
-            const lineData = scriptLines[currentLine];
-            
-            // 💡 여기서 이미지가 갈아끼워집니다.
-            if (lineData.image) {
-                document.getElementById('bgImage').src = lineData.image;
-            }
-
-            document.getElementById('speakerName').textContent = lineData.name;
-            document.getElementById('dialogueText').textContent = "";
-            document.getElementById('clickIndicator').style.display = 'none';
-            
-            isTyping = true;
-            let charIndex = 0;
-            let currentText = ""; 
-            
-            typingTimer = setInterval(() => {
-                currentText += lineData.text.charAt(charIndex); 
-                document.getElementById('dialogueText').textContent = currentText; 
-                
-                // 공백이 아닐 때만 타격음 재생
-                if (lineData.text.charAt(charIndex) !== " ") {
-                    typeSound.currentTime = 0;
-                    typeSound.play().catch(e => {});
-                }
-                
-                charIndex++;
-                
-                if (charIndex >= lineData.text.length) {
-                    clearInterval(typingTimer);
-                    isTyping = false;
-                    document.getElementById('clickIndicator').style.display = 'block';
-                }
-            }, 50); 
+            bgm.play();
+            bgmBtn.innerText = "[ 🎵 BGM ]";
+            // 재생 중일 때 버튼 색상 반전 효과
+            bgmBtn.style.background = "#fff";
+            bgmBtn.style.color = "#000";
         }
+        isPlaying = !isPlaying;
     }
 </script>
 </body>
